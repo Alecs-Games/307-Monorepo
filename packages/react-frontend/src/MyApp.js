@@ -27,7 +27,13 @@ function MyApp() {
     const [characters, setCharacters] = useState([]);
     function updateList(person) { 
       postUser(person)
-        .then(() => setCharacters([...characters, person]))
+        .then((response) => {
+          if(response.status == 201){
+            setCharacters([...characters, person])
+          }else{
+            console.log("Failed to post user: Response status not 201.")
+          }
+        })
         .catch((error) => {
           console.log(error);
         })
