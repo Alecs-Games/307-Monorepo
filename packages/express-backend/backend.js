@@ -1,5 +1,6 @@
 // backend.js
 import express from "express";
+import cors from "cors";
 
 const app = express();
 const port = 8000;
@@ -49,6 +50,8 @@ const deleteUser = (user) => {
   users["users_list"].splice(index, 1);
   return user;
 };
+
+app.use(cors());
 app.use(express.json());
 
 app.get("/users/:id", (req, res) => {
@@ -63,15 +66,16 @@ app.get("/users/:id", (req, res) => {
 
 
 app.get("/users", (req, res) => {
-  let value = users["users_list"];
+  let value = {"users_list": []}
+  value["users_list"] = users["users_list"];
   const name = req.query.name;
   const job = req.query.job;
   if(name != undefined){
-    value = value.filter(
+    value["users_list"] = value["users_list"].filter(
       (user) => user["name"] === name);
   }
   if(job != undefined){
-    value = value.filter(
+    value["users_list"] = value["users_list"].filter(
       (user) => user["job"] === job);
   }
   res.send(value)
