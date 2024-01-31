@@ -42,6 +42,7 @@ const findUserByName = (name) => {
   );
 };
 const addUser = (user) => {
+  user["id"] = Math.round(Math.random() * 10000).toString();
   users["users_list"].push(user);
   return user;
 };
