@@ -90,9 +90,9 @@ app.listen(port, () => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  addUser(userToAdd);
+  let user = addUser(userToAdd);
   res.status(201);
-  res.send();
+  res.send(user);
 });
 
 app.delete("/users/:id", (req, res) => {

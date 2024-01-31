@@ -29,7 +29,10 @@ function MyApp() {
       postUser(person)
         .then((response) => {
           if(response.status == 201){
-            setCharacters([...characters, person])
+            response.json().then((json) => { 
+              setCharacters([...characters, json]);
+            }
+            );
           }else{
             console.log("Failed to post user: Response status not 201.")
           }
