@@ -34,7 +34,7 @@ function MyApp() {
             }
             );
           }else{
-            console.log("Failed to post user: Response status not 201.")
+            console.log("Failed to post user: Response status:" + response.status)
           }
         })
         .catch((error) => {
@@ -42,10 +42,23 @@ function MyApp() {
         })
     }
     function removeOneCharacter(index) {
-        const updated = characters.filter((character, i) => {
+      fetch("Http://localhost:8000/users/" + characters[index]["id"], {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([characters[index]["id"]]),
+      }).then((response) => {
+        if(response.status == 204){
+          console.log("success!");
+          const updated = characters.filter((character, i) => {
             return i !== index;
-        });
-        setCharacters(updated);
+          });
+          setCharacters(updated);
+        }else{
+          console.log("Failed to post user::: Response status:" + response.status)
+        }
+      });
     }
     return (
         <div className="container">

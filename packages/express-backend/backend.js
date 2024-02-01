@@ -48,6 +48,9 @@ const addUser = (user) => {
 };
 const deleteUser = (user) => {
   const index = users["users_list"].indexOf(user);
+  if(index == -1){
+    return -1;
+  }
   users["users_list"].splice(index, 1);
   return user;
 };
@@ -98,6 +101,12 @@ app.post("/users", (req, res) => {
 app.delete("/users/:id", (req, res) => {
   const id = req.params["id"];
   let user = findUserById(id);
-  deleteUser(user)
+  if(user == undefined){
+    res.status(404);
+  }else{
+    deleteUser(user);
+    res.status(204);
+  }
+  console.log(res.status);
   res.send();
 });
