@@ -53,6 +53,7 @@ const deleteUser = (user) => {
   return user;
 };
 app.use(express.json());
+app.use(cors());
 
 app.get("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
